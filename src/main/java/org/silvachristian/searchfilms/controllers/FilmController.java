@@ -1,6 +1,7 @@
 package org.silvachristian.searchfilms.controllers;
 
 import org.silvachristian.searchfilms.entity.FilmDetails;
+import org.silvachristian.searchfilms.repository.FilmRepository;
 import org.silvachristian.searchfilms.services.FilmServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class FilmController {
 
     FilmServices filmServices;
+    FilmRepository movieRepository;
 
-    FilmController(FilmServices filmServices) {
+    FilmController(FilmServices filmServices, FilmRepository movieRepository) {
         this.filmServices = filmServices;
+        this.movieRepository = movieRepository;
     }
 
     @GetMapping("/home")
@@ -26,6 +29,7 @@ public class FilmController {
     @PostMapping("/home")
     public String postHome(@RequestParam String filmTitle, Model model) {
         FilmDetails movie = filmServices.findByTitle(filmTitle);
+        movieRepository.save(movie);
 
         model.addAttribute("movie", movie);
 

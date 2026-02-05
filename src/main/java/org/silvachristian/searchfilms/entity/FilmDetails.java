@@ -10,7 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
+@Entity(name = "movies")
 public class FilmDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,5 +36,8 @@ public class FilmDetails {
 
     @JsonProperty("Type")
     String filmType;
+
+    @JsonProperty("Plot")
+    String filmPlot;
 
 }

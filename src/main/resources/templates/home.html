@@ -4,24 +4,22 @@
       integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-
+    <link href="../static/css/styles.css" rel="stylesheet" th:href="@{/css/styles.css}" />
     <head>
         <meta charset="UTF-8">
         <title>Movie Catalog</title>
     </head>
 
-    <body class="text-bg-dark " style="font-family: 'Ope' ,sans-serif">
+    <body class="text-bg-dark " style="font-family: 'Red Hat Text' ,sans-serif">
 
     <div class="m-sm-3">
         <div class="container-sm text-bg-dark border border-2 border-secondary rounded-pill">
             <div class="text-center">
-                <header style="margin-top: 1%;margin-bottom: 1%">
+                <header class="margin2">
                     <h2 class="text-white">Movie Catalog</h2>
                 </header>
             </div>
         </div>
-
-        <br style="margin-top: 1em">
     </div>
 
     <main class="form-floating">
@@ -29,7 +27,7 @@
             <div class="container border border-2 odd-row-color rounded rounded-3">
                 <div class="row">
 
-                    <form th:action="@{/home}" method="post" id="filmSearch">
+                    <form th:action="@{/home}" method="post">
 
                         <div style="margin-top: 2%" class="col text-center">
                             <label>
@@ -44,27 +42,29 @@
 
                     <div class="col">
                         <div class="row">
-                            <ul class="col border border-2 rounded text-start h5" style="margin: 2%">
-                                <li style="margin-left:5%;margin-top: 4%">Title: <span th:text="${movie.filmTitle}"></span></li>
-                                <li style="margin-left:5%;margin-top: 4%">Year: <span th:text="${movie.filmYear}"></span></li>
-                                <li style="margin-left:5%;margin-top: 4%">Genres: <span th:text="${movie.filmGenre}"></span></li>
-                                <li style="margin-left:5%;margin-top: 4%;margin-bottom: 4%">Type: <span th:text="${movie.filmType}"></span></li>
-                                <li style="margin-left:5%;margin-top: 4%;margin-bottom: 4%">Country: <span th:text="${movie.filmCountry}"></span></li>
-                                <li style="margin-left:5%;margin-top: 4%;margin-bottom: 4%">Rating: <span th:text="${movie.filmRating}"></span></li>
+                            <ul class="col border border-2 rounded text-start h5 margin2">
+                                <li class="marginList">Title: <span th:text="${movie.filmTitle}"></span></li>
+                                <li class="marginList">Year: <span th:text="${movie.filmYear}"></span></li>
+                                <li class="marginList">Genres: <span th:text="${movie.filmGenre}"></span></li>
+                                <li class="marginList">Type: <span th:text="${movie.filmType}"></span></li>
+                                <li class="marginList">Country: <span th:text="${movie.filmCountry}"></span></li>
+                                <li class="marginList">Rating: <span th:text="${movie.filmRating}"></span></li>
                             </ul>
 
-                            <span class="col border border-2 rounded text-center bg-tertiary" style="margin-top: 2%;">
-                                <img class="border border-2 round rounded bg-black" height="300" th:src="${movie.posterURL}" alt="Movie Poster">
-                            </span>
+                            <div class="col border border-2 rounded margin2">
+                                <div class="row">
+                                    <span class="col text-center">
+                                        <img class="border border-2 round rounded bg-black margin2" height="280" th:src="${movie.posterURL}" alt="Movie Poster">
+                                    </span>
+                                    <span  class="col h5 margin2">
+                                        Plot: <span th:text="${movie.filmPlot}"></span>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
                 </div>
-                <br style="margin-bottom: 5px">
             </div>
-
-
     </main>
-
 </body>
 </html>
