@@ -1,5 +1,6 @@
 package org.silvachristian.searchfilms.services;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.silvachristian.searchfilms.entity.FilmDetails;
 import org.silvachristian.searchfilms.repository.FilmRepository;
 import org.springframework.stereotype.Service;
@@ -10,13 +11,13 @@ public class FilmServices {
 
     private final RestClient restClient;
     private final FilmRepository movieRepository;
+    private final String apiKey;
 
-
-    private final String apiKey = "";
-
-    FilmServices(RestClient.Builder builder, FilmRepository movieRepository) {
+    FilmServices(RestClient.Builder builder, FilmRepository movieRepository,
+                 @Value("${omdb-api-key}") String apiKeyProperties) {
         this.restClient = builder.baseUrl("http://www.omdbapi.com/").build();
         this.movieRepository = movieRepository;
+        this.apiKey = apiKeyProperties;
     }
 
     public boolean checkIfAlreadySearched(String movieTitle) {
