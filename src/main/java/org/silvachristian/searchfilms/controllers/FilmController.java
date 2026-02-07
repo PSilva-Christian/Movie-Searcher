@@ -20,7 +20,7 @@ public class FilmController {
         this.movieRepository = movieRepository;
     }
 
-    @GetMapping("/home")
+    @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("movie", new FilmDetails());
         return "home";

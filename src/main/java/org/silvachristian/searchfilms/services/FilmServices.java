@@ -12,27 +12,27 @@ public class FilmServices {
     private final FilmRepository movieRepository;
 
 
-    private final String apiKey = "{omdb.api.key}";
+    private final String apiKey = "";
 
     FilmServices(RestClient.Builder builder, FilmRepository movieRepository) {
         this.restClient = builder.baseUrl("http://www.omdbapi.com/").build();
         this.movieRepository = movieRepository;
     }
 
-    public Long checkIfAlreadySearched(String movieTitle) {
-        return movieRepository.findFilmDetailsByFilmTitle (movieTitle);
-
+    public boolean checkIfAlreadySearched(String movieTitle) {
+        return movieRepository.existsByFilmTitle(movieTitle);
     }
 
     public FilmDetails findByTitle(String movieTitle) {
-        Long idCheck = checkIfAlreadySearched(movieTitle);
-        if (idCheck != null){
-            return movieRepository.findById(idCheck).orElse(null);
+        movieTitle = stringToCapital(movieTitle);
+        if (checkIfAlreadySearched(movieTitle)) {
+            return movieRepository.findFilmDetailsByFilmTitle(movieTitle);
         }
         else {
-        return restClient.get()
+            String finalMovieTitle = movieTitle;
+            return restClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .queryParam("t", movieTitle) // Usi
+                        .queryParam("t", finalMovieTitle) // Usi
                         .queryParam("apikey", apiKey)
                         .build())
                 .retrieve()
@@ -40,6 +40,16 @@ public class FilmServices {
         }
     }
 
+    public String stringToCapital(String movieTitle){
+
+        String [] movieWords = movieTitle.split(" ");
+        StringBuilder finalMovieTitle = new StringBuilder();
+        for(String movieWord : movieWords){
+            movieWord = movieWord.substring(0, 1).toUpperCase() + movieWord.substring(1).toLowerCase();
+            finalMovieTitle.append(" ").append(movieWord);
+        }
+        return finalMovieTitle.toString().trim();
+    }
 }
 
 
