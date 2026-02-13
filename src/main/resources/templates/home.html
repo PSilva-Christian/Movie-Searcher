@@ -7,64 +7,106 @@
     <link href="../static/css/styles.css" rel="stylesheet" th:href="@{/css/styles.css}" />
     <head>
         <meta charset="UTF-8">
+        <link rel="icon" type="image/x.png" th:href="@{/images/icons/head_icon.png}" />
         <title>Movie Catalog</title>
     </head>
 
-    <body class="text-bg-dark " style="font-family: 'Red Hat Text' ,sans-serif">
+    <body>
 
-    <div class="m-sm-3">
-        <div class="container-sm text-bg-dark border border-2 border-secondary rounded-pill">
-            <div class="text-center">
-                <header class="margin2">
-                    <h2 class="text-white">Movie Catalog</h2>
-                </header>
-            </div>
+    <div class="titleBox">
+        <div class="headerSite">
+            <header>
+                <img th:src="@{/images/icons/head_icon.png}" alt="" class="imageFourtypx">
+                <span>
+                    Movie Catalog
+                </span>
+            </header>
         </div>
     </div>
 
     <main class="form-floating">
+        <div class="container border border-2 odd-row-color rounded rounded-3 mainBox">
+            <div class="row">
 
-            <div class="container border border-2 odd-row-color rounded rounded-3">
-                <div class="row">
+                <form th:action="@{/home}" method="post">
 
-                    <form th:action="@{/home}" method="post">
-
-                        <div style="margin-top: 2%" class="col text-center">
+                    <div style="margin-top: 2%" class="col text-center">
+                        <span>
+                            <img class="imageFourtypx" th:src="@{/images/icons/title_movie_search.png}" alt="">
                             <label>
-                                <input type="text" name="filmTitle" placeholder="Enter your movie title"  class="border border-2 btn btn-outline-light"/>
+                                <input type="text" name="filmTitle" placeholder="Enter your movie title"  class="searchBarCarac btn btn-outline-light"/>
                             </label>
-                            <button class="btn btn-outline-light" type="submit">Search</button>
+                            <button class="btn btn-outline-light searchBarCarac" type="submit">Search</button>
+                        </span>
+                    </div>
 
-                        </div>
+                </form>
 
-                        <br style="margin-top: 1%">
-                    </form>
+                <div class="row" style="margin-top: 2%;">
 
                     <div class="col">
-                        <div class="row">
-                            <ul class="col border border-2 rounded text-start h5 margin2">
-                                <li class="marginList">Title: <span th:text="${movie.filmTitle}"></span></li>
-                                <li class="marginList">Year: <span th:text="${movie.filmYear}"></span></li>
-                                <li class="marginList">Genres: <span th:text="${movie.filmGenre}"></span></li>
-                                <li class="marginList">Type: <span th:text="${movie.filmType}"></span></li>
-                                <li class="marginList">Country: <span th:text="${movie.filmCountry}"></span></li>
-                                <li class="marginList">Rating: <span th:text="${movie.filmRating}"></span></li>
-                            </ul>
+                        <p class="boxTitleMovie">Movie Info</p>
+                        <ul class="border border-2 rounded text-start h5 movieInfo">
+                            <li>
+                                <img class="imageMovieInfo" th:src="@{/images/icons/icon_title.png}" alt=""/>
+                                Title: <span th:text="${movie.filmTitle}"></span>
+                            </li>
 
-                            <div class="col border border-2 rounded margin2">
-                                <div class="row">
-                                    <span class="col text-center">
-                                        <img class="border border-2 round rounded bg-black margin2" height="280" th:src="${movie.posterURL}" alt="Movie Poster">
-                                    </span>
-                                    <span  class="col h5 margin2">
-                                        Plot: <span th:text="${movie.filmPlot}"></span>
-                                    </span>
-                                </div>
+                            <li>
+                                <img class="imageMovieInfo" th:src="@{/images/icons/icon_date.png}" alt=""/>
+                                Year: <span th:text="${movie.filmYear}"></span>
+                            </li>
+
+                            <li>
+                                <img class="imageMovieInfo" th:src="@{/images/icons/theater_302260.png}" alt=""/>
+                                Genres: <span th:text="${movie.filmGenre}"></span></li>
+                            <li>
+
+                                <img class="imageMovieInfo" th:src="@{/images/icons/icon_tv.png}" alt=""/>
+                                Type: <span th:text="${movie.filmType}"></span>
+                            </li>
+
+                            <li>
+                                <img class="imageMovieInfo" th:src="@{/images/icons/icon_map.png}" alt=""/>
+                                Country: <span th:text="${movie.filmCountry}"></span>
+                            </li>
+
+                            <li>
+                                <img class="imageMovieInfo" th:src="@{/images/icons/icon_star.png}" alt=""/>
+                                Rating: <span th:text="${movie.filmRating}"></span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col">
+                        <p class="boxTitleMovie">Movie</p>
+                        <div class="movieInfo border border-2 rounded row">
+                            <div class="col border border-2 round rounded text-center">
+                             <img class="movieImagePoster" th:src="${movie.posterURL}" alt="">
                             </div>
+                            <div class="col border border-2 round rounded">
+                                <p class="h4 moviePlot">Plot:</p>
+                                <span class="h5 moviePlot" th:text="${movie.filmPlot}"></span>
+                            </div>
+
                         </div>
                     </div>
                 </div>
+
             </div>
+        </div>
     </main>
+
+    <footer class="container">
+        <div class="row">
+            <div class="col footerSite">
+                <p>Web App made for Educational Purposes</p>
+            </div>
+
+            <div class="col footerSite">
+                <p>By Christian Pereira</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
