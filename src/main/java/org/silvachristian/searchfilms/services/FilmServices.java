@@ -33,7 +33,7 @@ public class FilmServices {
             String finalMovieTitle = movieTitle;
             return restClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .queryParam("t", finalMovieTitle) // Usi
+                        .queryParam("t", finalMovieTitle)
                         .queryParam("apikey", apiKey)
                         .build())
                 .retrieve()

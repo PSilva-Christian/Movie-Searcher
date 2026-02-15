@@ -14,18 +14,18 @@
     <body>
 
     <div class="titleBox">
-        <div class="headerSite">
+        <div class="headerSite shadow-lg">
             <header>
                 <img th:src="@{/images/icons/head_icon.png}" alt="" class="imageFourtypx">
-                <span>
+                <span class="colorFontOpacity">
                     Movie Catalog
                 </span>
             </header>
         </div>
     </div>
 
-    <main class="form-floating">
-        <div class="container border border-2 odd-row-color rounded rounded-3 mainBox">
+    <main class="form-floating ">
+        <div class="container border border-2 odd-row-color rounded rounded-3 mainBox shadow-lg">
             <div class="row">
 
                 <form th:action="@{/home}" method="post">
@@ -34,9 +34,9 @@
                         <span>
                             <img class="imageFourtypx" th:src="@{/images/icons/title_movie_search.png}" alt="">
                             <label>
-                                <input type="text" name="filmTitle" placeholder="Enter your movie title"  class="searchBarCarac btn btn-outline-light"/>
+                                <input type="text" name="filmTitle" placeholder="Enter your movie title"  class="searchBarCarac btn btn-outline-light shadow-lg"/>
                             </label>
-                            <button class="btn btn-outline-light searchBarCarac" type="submit">Search</button>
+                            <button class="btn btn-outline-light searchBarCarac shadow-lg" type="submit">Search</button>
                         </span>
                     </div>
 
@@ -45,8 +45,8 @@
                 <div class="row" style="margin-top: 2%;">
 
                     <div class="col">
-                        <p class="boxTitleMovie">Movie Info</p>
-                        <ul class="border border-2 rounded text-start h5 movieInfo">
+                        <p class="boxTitleMovie colorFontOpacity">Movie Info</p>
+                        <ul class="border border-2 rounded text-start shadow-lg h5 movieInfo">
                             <li>
                                 <img class="imageMovieInfo" th:src="@{/images/icons/icon_title.png}" alt=""/>
                                 Title: <span th:text="${movie.filmTitle}"></span>
@@ -79,14 +79,17 @@
                     </div>
 
                     <div class="col">
-                        <p class="boxTitleMovie">Movie</p>
-                        <div class="movieInfo border border-2 rounded row">
-                            <div class="col border border-2 round rounded text-center">
-                             <img class="movieImagePoster" th:src="${movie.posterURL}" alt="">
+                        <p class="boxTitleMovie colorFontOpacity">Movie / Series</p>
+
+                        <div class="movieInfo row">
+
+                            <div class="col movieImageDiv shadow-lg">
+                                <img class="movieImagePoster" th:src="${movie.posterURL}" alt="">
                             </div>
-                            <div class="col border border-2 round rounded">
-                                <p class="h4 moviePlot">Plot:</p>
-                                <span class="h5 moviePlot" th:text="${movie.filmPlot}"></span>
+
+                            <div class="col moviePlot shadow-lg">
+                                <p class="h4 colorFontOpacity text-center boxTitleMovie"  style="padding-bottom: 3%">Plot</p>
+                                <span class="h6 colorFontOpacity " th:text="${movie.filmPlot}"></span>
                             </div>
 
                         </div>
@@ -98,15 +101,16 @@
     </main>
 
     <footer class="container">
-        <div class="row">
+        <div class="row shadow-lg">
             <div class="col footerSite">
-                <p>Web App made for Educational Purposes</p>
+                <p class="colorFontOpacity">Web App made for Educational Purposes</p>
             </div>
 
             <div class="col footerSite">
-                <p>By Christian Pereira</p>
+                <p class="colorFontOpacity">By Christian Pereira</p>
             </div>
         </div>
     </footer>
+
 </body>
 </html>
