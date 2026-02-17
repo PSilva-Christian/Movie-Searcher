@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.util.List;
 
 @Controller
 public class FilmController {
@@ -34,5 +35,12 @@ public class FilmController {
         model.addAttribute("movie", movie);
 
         return "home";
+    }
+
+    @GetMapping("/favorites")
+    public String favorites(Model model) {
+        List<FilmDetails> movieFavorites = filmServices.searchAllFavoriteMovies();
+        model.addAttribute("movies", movieFavorites);
+        return "favorites";
     }
 }

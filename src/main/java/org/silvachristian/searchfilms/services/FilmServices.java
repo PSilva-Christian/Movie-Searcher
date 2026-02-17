@@ -6,6 +6,8 @@ import org.silvachristian.searchfilms.repository.FilmRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
+import java.util.List;
+
 @Service
 public class FilmServices {
 
@@ -50,6 +52,11 @@ public class FilmServices {
             finalMovieTitle.append(" ").append(movieWord);
         }
         return finalMovieTitle.toString().trim();
+    }
+
+    public List<FilmDetails> searchAllFavoriteMovies() {
+        return movieRepository.findAll();
+
     }
 }
 
