@@ -21,15 +21,15 @@ public class FilmController {
         this.movieRepository = movieRepository;
     }
 
-    @GetMapping("/")
+    @GetMapping("/home")
     public String home(Model model) {
         model.addAttribute("movie", new FilmDetails());
         return "home";
     }
 
     @PostMapping("/home")
-    public String postHome(@RequestParam String filmTitle, Model model) {
-        FilmDetails movie = filmServices.findByTitle(filmTitle);
+    public String postHome(@RequestParam String filmTitleGenre, Model model) {
+        FilmDetails movie = filmServices.findByTitle(filmTitleGenre);
         movieRepository.save(movie);
 
         model.addAttribute("movie", movie);
@@ -39,8 +39,19 @@ public class FilmController {
 
     @GetMapping("/favorites")
     public String favorites(Model model) {
-        List<FilmDetails> movieFavorites = filmServices.searchAllFavoriteMovies();
-        model.addAttribute("movies", movieFavorites);
+        List<FilmDetails> movieFavorites = filmServices.searchAllFavoriteMovies("all");
+        model.addAttribute("movie",  movieFavorites);
+        return "favorites";
+    }
+
+    @PostMapping("/favorites")
+    public String favorites(@RequestParam String filmTitleGenre, Model model) {
+        List<FilmDetails> movieFavorites = filmServices.searchAllFavoriteMovies(filmTitleGenre);
+        if (movieFavorites.isEmpty()) {
+            model.addAttribute("movies", null);
+        } else {
+            model.addAttribute("movies", movieFavorites);
+        }
         return "favorites";
     }
 }

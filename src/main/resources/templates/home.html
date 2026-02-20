@@ -1,118 +1,74 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <link href="../static/css/styles.css" rel="stylesheet" th:href="@{/css/styles.css}" />
-    <head>
-        <meta charset="UTF-8">
-        <link rel="icon" type="image/x.png" th:href="@{/images/icons/head_icon.png}" />
-        <title>Movie Catalog</title>
-    </head>
+    <link href="../static/css/base.css" rel="stylesheet" th:href="@{/css/base.css}" />
+
+    <div th:replace="~{fragments :: head}"></div>
+
+    <header th:replace="~{fragments :: titlePage('Movie Catalog')}"></header>
 
     <body>
+        <main class="form-floating">
+            <div class="container border border-2 odd-row-color rounded rounded-3 mainBox shadow-lg">
+                <div class="row">
+                    <form th:action="@{/home}" method="post">
+                        <div th:replace="fragments :: formSearch('favorites', 'Enter a movie title')"></div>
+                    </form>
+                    <div class="row mt-2">
+                        <div class="col">
+                            <p class="boxTitleMovie colorFontOpacity text-center">Movie Info</p>
+                            <ul class="border border-2 rounded text-start shadow-lg h5 movieInfo">
+                                <li>
+                                    <img class="imageMovieInfo" th:src="@{/images/icons/icon_title.png}" alt=""/>
+                                    Title: <span th:text="${movie.filmTitle == null ? 'None' : movie.filmTitle}"></span>
+                                </li>
+                                <li>
+                                    <img class="imageMovieInfo" th:src="@{/images/icons/icon_date.png}" alt=""/>
+                                    Year: <span th:text="${movie.filmYear == null ? 'None' : movie.filmYear}"></span>
+                                </li>
+                                <li>
+                                    <img class="imageMovieInfo" th:src="@{/images/icons/theater_302260.png}" alt=""/>
+                                    Genres: <span th:text="${movie.filmGenre == null ? 'None' : movie.filmGenre}"></span></li>
+                                <li>
+                                    <img class="imageMovieInfo" th:src="@{/images/icons/icon_tv.png}" alt=""/>
+                                    Type: <span th:text="${movie.filmType == null ? 'None' : movie.filmType}"></span>
+                                </li>
+                                <li>
+                                    <img class="imageMovieInfo" th:src="@{/images/icons/icon_map.png}" alt=""/>
+                                    Country: <span th:text="${movie.filmCountry == null ? 'None' : movie.filmCountry}"></span>
+                                </li>
+                                <li>
+                                    <img class="imageMovieInfo" th:src="@{/images/icons/icon_star.png}" alt=""/>
+                                    Rating: <span th:text="${movie.filmRating == null ? 'None' : movie.filmRating}"></span>
+                                </li>
+                            </ul>
+                        </div>
 
-    <div class="titleBox">
-        <div class="headerSite shadow-lg">
-            <header>
-                <img th:src="@{/images/icons/head_icon.png}" alt="" class="imageFourtypx">
-                <span class="colorFontOpacity">
-                    Movie Catalog
-                </span>
-            </header>
-        </div>
-    </div>
+                        <div class="col">
+                            <p class="boxTitleMovie colorFontOpacity">Movie / Series</p>
 
-    <main class="form-floating ">
-        <div class="container border border-2 odd-row-color rounded rounded-3 mainBox shadow-lg">
-            <div class="row">
+                            <div class="movieInfo row">
 
-                <form th:action="@{/home}" method="post">
-
-                    <div style="margin-top: 2%" class="col text-center">
-                        <span>
-                            <img class="imageFourtypx" th:src="@{/images/icons/title_movie_search.png}" alt="">
-                            <label>
-                                <input type="text" name="filmTitle" placeholder="Enter your movie title"  class="searchBarCarac btn btn-outline-light shadow-lg"/>
-                            </label>
-                            <button class="btn btn-outline-light searchBarCarac shadow-lg" type="submit">Search</button>
-                            <a th:href="@{favorites}">Favorites</a>
-
-                        </span>
-                    </div>
-
-                </form>
-
-                <div class="row" style="margin-top: 2%;">
-
-                    <div class="col">
-                        <p class="boxTitleMovie colorFontOpacity">Movie Info</p>
-                        <ul class="border border-2 rounded text-start shadow-lg h5 movieInfo">
-                            <li>
-                                <img class="imageMovieInfo" th:src="@{/images/icons/icon_title.png}" alt=""/>
-                                Title: <span th:text="${movie.filmTitle}"></span>
-                            </li>
-
-                            <li>
-                                <img class="imageMovieInfo" th:src="@{/images/icons/icon_date.png}" alt=""/>
-                                Year: <span th:text="${movie.filmYear}"></span>
-                            </li>
-
-                            <li>
-                                <img class="imageMovieInfo" th:src="@{/images/icons/theater_302260.png}" alt=""/>
-                                Genres: <span th:text="${movie.filmGenre}"></span></li>
-                            <li>
-
-                                <img class="imageMovieInfo" th:src="@{/images/icons/icon_tv.png}" alt=""/>
-                                Type: <span th:text="${movie.filmType}"></span>
-                            </li>
-
-                            <li>
-                                <img class="imageMovieInfo" th:src="@{/images/icons/icon_map.png}" alt=""/>
-                                Country: <span th:text="${movie.filmCountry}"></span>
-                            </li>
-
-                            <li>
-                                <img class="imageMovieInfo" th:src="@{/images/icons/icon_star.png}" alt=""/>
-                                Rating: <span th:text="${movie.filmRating}"></span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="col">
-                        <p class="boxTitleMovie colorFontOpacity">Movie / Series</p>
-
-                        <div class="movieInfo row">
-
-                            <div class="col movieImageDiv shadow-lg">
-                                <img class="movieImagePoster" th:src="${movie.posterURL}" alt="">
+                                <div class="col movieImageDiv shadow-lg">
+                                    <img class="movieImagePoster" th:src="${movie.posterURL != null && !movie.posterURL.isEmpty()}
+                                                                        ? ${movie.posterURL}
+                                                                        : @{/images/test.jpg}" alt="">
+                                </div>
+                                <div class="col moviePlot shadow-lg">
+                                    <p class="h4 colorFontOpacity boxTitleMovie underline">Plot</p>
+                                    <span class="h6 colorFontOpacity " th:text="${movie.filmPlot == null ? 'None' : movie.filmPlot}"></span>
+                                </div>
                             </div>
-
-                            <div class="col moviePlot shadow-lg">
-                                <p class="h4 colorFontOpacity text-center boxTitleMovie"  style="padding-bottom: 3%">Plot</p>
-                                <span class="h6 colorFontOpacity " th:text="${movie.filmPlot}"></span>
-                            </div>
-
                         </div>
                     </div>
                 </div>
-
             </div>
-        </div>
-    </main>
+        </main>
+    </body>
 
-    <footer class="container">
-        <div class="row shadow-lg">
-            <div class="col footerSite">
-                <p class="colorFontOpacity">Web App made for Educational Purposes</p>
-            </div>
+    <footer th:replace="~{fragments :: footer}"></footer>
 
-            <div class="col footerSite">
-                <p class="colorFontOpacity">By Christian Pereira</p>
-            </div>
-        </div>
-    </footer>
-
-</body>
 </html>

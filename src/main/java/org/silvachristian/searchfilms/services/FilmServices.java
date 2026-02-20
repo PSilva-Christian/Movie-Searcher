@@ -54,8 +54,12 @@ public class FilmServices {
         return finalMovieTitle.toString().trim();
     }
 
-    public List<FilmDetails> searchAllFavoriteMovies() {
-        return movieRepository.findAll();
+    public List<FilmDetails> searchAllFavoriteMovies(String filmTitleGenre) {
+        if (filmTitleGenre.isEmpty() || filmTitleGenre.equals("all")) {
+            return movieRepository.findAll();
+        } else {
+            return movieRepository.findAllByFilmGenreContaining(stringToCapital(filmTitleGenre));
+        }
 
     }
 }
