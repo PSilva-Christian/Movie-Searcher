@@ -3,7 +3,6 @@ package org.silvachristian.searchfilms.controllers;
 import org.silvachristian.searchfilms.entity.FavoritesInfo;
 import org.silvachristian.searchfilms.entity.MovieInfo;
 import org.silvachristian.searchfilms.repository.MovieRepository;
-import org.silvachristian.searchfilms.services.FavoriteService;
 import org.silvachristian.searchfilms.services.MovieServices;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,12 +19,10 @@ public class MovieController {
 
     MovieServices movieServices;
     MovieRepository movieRepository;
-    FavoriteService favoriteService;
 
-    MovieController(MovieServices filmServices, MovieRepository movieRepository, FavoriteService favoriteService) {
+    MovieController(MovieServices filmServices, MovieRepository movieRepository) {
         this.movieServices = filmServices;
         this.movieRepository = movieRepository;
-        this.favoriteService = favoriteService;
     }
 
     @GetMapping("/home")
@@ -45,7 +42,7 @@ public class MovieController {
 
     @GetMapping("/favorites")
     public String favorites(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        List<FavoritesInfo> movieFavorites = favoriteService.showFavorites("all");
+        List<FavoritesInfo> movieFavorites = movieServices.showFavorites("all");
         model.addAttribute("movie",  movieFavorites);
         model.addAttribute("username", userDetails.getUsername());
         return "/movies/favorites";
@@ -53,7 +50,7 @@ public class MovieController {
 
     @PostMapping("/favorites")
     public String favorites(@RequestParam String movieGenre, Model model) {
-        List<FavoritesInfo> movieFavorites = favoriteService.showFavorites(movieGenre);
+        List<FavoritesInfo> movieFavorites = movieServices.showFavorites(movieGenre);
         if (movieFavorites.isEmpty()) {
             model.addAttribute("movies", null);
         } else {

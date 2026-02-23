@@ -1,10 +1,14 @@
 package org.silvachristian.searchfilms.services;
 
+import org.silvachristian.searchfilms.entity.FavoritesInfo;
 import org.springframework.beans.factory.annotation.Value;
 import org.silvachristian.searchfilms.entity.MovieInfo;
 import org.silvachristian.searchfilms.repository.MovieRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestClient;
+
+import java.util.List;
 
 @Service
 public class MovieServices {
@@ -51,6 +55,14 @@ public class MovieServices {
             finalMovieTitle.append(" ").append(movieWord);
         }
         return finalMovieTitle.toString().trim();
+    }
+
+    public List<FavoritesInfo> showFavorites(@RequestParam String movieGenre) {
+        if (movieGenre.isEmpty() || movieGenre.equals("all")) {
+            return movieRepository.findAllFavorites();
+        } else {
+            return movieRepository.findByGenre(stringToCapital(movieGenre));
+        }
     }
 }
 
