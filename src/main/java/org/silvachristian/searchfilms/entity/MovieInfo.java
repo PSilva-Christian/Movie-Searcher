@@ -1,17 +1,14 @@
 package org.silvachristian.searchfilms.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity(name = "movies")
-public class FilmDetails {
+public class MovieInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

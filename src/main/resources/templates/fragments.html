@@ -14,18 +14,18 @@
         </div>
     </header> Title Page
 
-    <div th:fragment="formSearch(pageName, placehold)" style="margin-top: 2%" class="col text-center mb-5">
+    <div th:fragment="formSearch(pageName, placehold, varNameReturned)" class="col text-center mb-4 mt-3">
         <span>
             <img class="imageFourtypx" th:src="@{/images/icons/title_movie_search.png}" alt="">
             <label>
-                <input type="text" name="filmTitleGenre" th:placeholder="${placehold}"  class="searchBarCarac btn btn-outline-light shadow-lg"/>
+                <input type="text" th:name="${varNameReturned}" th:placeholder="${placehold}"  class="searchBarCarac btn btn-outline-light shadow-lg"/>
             </label>
             <button class="btn btn-outline-light searchBarCarac shadow-lg" type="submit">Search</button>
             <a class="btn btn-outline-ligh searchBarCarac shadow-lg" th:href="@{${pageName}}" th:text="${pageName}"></a>
         </span>
     </div> Form Base
 
-    <footer class="container" th:fragment="footer">
+    <footer class="container " th:fragment="footer">
         <div class="row shadow-lg">
             <div class="col footerSite">
                 <p class="colorFontOpacity">Web App made for Educational Purposes</p>

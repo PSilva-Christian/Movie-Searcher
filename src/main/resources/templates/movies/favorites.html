@@ -4,7 +4,7 @@
           integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <link href="../static/css/base.css" rel="stylesheet" th:href="@{/css/base.css}" />
+    <link href="../../static/css/base.css" rel="stylesheet" th:href="@{/css/base.css}" />
 
     <div th:replace="~{fragments :: head}"></div>
 
@@ -13,8 +13,9 @@
     <body>
         <main class="form-floating ">
             <div class="container border border-2 rounded rounded-3 mainBox shadow-lg">
+                <div class="h3 colorFontOpacity" th:text="${username}"></div>
                 <form th:action="@{/favorites}" method="post">
-                    <div th:replace="fragments :: formSearch('home', 'Enter a movie genre')"></div>
+                    <div th:replace="~{fragments :: formSearch('home', 'Enter a movie genre', 'movieGenre')}"></div>
                 </form>
                 <div class="row g-4">
                     <div th:if="${movies == null}" class="colorFontOpacity text-center h3 bold underline">

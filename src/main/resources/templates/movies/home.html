@@ -4,7 +4,7 @@
           integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <link href="../static/css/base.css" rel="stylesheet" th:href="@{/css/base.css}" />
+    <link href="../../static/css/base.css" rel="stylesheet" th:href="@{/css/base.css}" />
 
     <div th:replace="~{fragments :: head}"></div>
 
@@ -12,12 +12,12 @@
 
     <body>
         <main class="form-floating">
-            <div class="container border border-2 odd-row-color rounded rounded-3 mainBox shadow-lg">
+            <div class="container border border-2 rounded rounded-3 mainBox shadow-lg">
                 <div class="row">
                     <form th:action="@{/home}" method="post">
-                        <div th:replace="fragments :: formSearch('favorites', 'Enter a movie title')"></div>
+                        <div th:replace="~{fragments :: formSearch('favorites', 'Enter a movie title', 'movieTitle')}"></div>
                     </form>
-                    <div class="row mt-2">
+                    <div class="row">
                         <div class="col">
                             <p class="boxTitleMovie colorFontOpacity text-center">Movie Info</p>
                             <ul class="border border-2 rounded text-start shadow-lg h5 movieInfo">
@@ -55,7 +55,7 @@
                                 <div class="col movieImageDiv shadow-lg">
                                     <img class="movieImagePoster" th:src="${movie.posterURL != null && !movie.posterURL.isEmpty()}
                                                                         ? ${movie.posterURL}
-                                                                        : @{/images/test.jpg}" alt="">
+                                                                        : @{/images/posternotfound.jpg}" alt="">
                                 </div>
                                 <div class="col moviePlot shadow-lg">
                                     <p class="h4 colorFontOpacity boxTitleMovie underline">Plot</p>
