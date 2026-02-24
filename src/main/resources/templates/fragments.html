@@ -14,7 +14,7 @@
         </div>
     </header> Title Page
 
-    <div th:fragment="formSearch(pageName, placehold, varNameReturned)" class="col text-center mb-4 mt-3">
+    <div th:fragment="formSearch(pageName, placehold, varNameReturned)" class="col text-center">
         <span>
             <img class="imageFourtypx" th:src="@{/images/icons/title_movie_search.png}" alt="">
             <label>
@@ -24,6 +24,8 @@
             <a class="btn btn-outline-ligh searchBarCarac shadow-lg" th:href="@{${pageName}}" th:text="${pageName}"></a>
         </span>
     </div> Form Base
+
+    <span th:fragment="show_username(username)" class="col-3 colorFontOpacity h3 show-username shadow-lg fw-bolder pb-2">User:  <span th:text="${username}" class="h4 "></span></span>
 
     <footer class="container " th:fragment="footer">
         <div class="row shadow-lg">

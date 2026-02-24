@@ -1,11 +1,12 @@
 package org.silvachristian.searchfilms.services;
 
+import org.silvachristian.searchfilms.entity.FavoriteSaved;
 import org.silvachristian.searchfilms.entity.FavoritesInfo;
+import org.silvachristian.searchfilms.repository.FavoritesRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.silvachristian.searchfilms.entity.MovieInfo;
 import org.silvachristian.searchfilms.repository.MovieRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestClient;
 
 import java.util.List;
@@ -16,34 +17,50 @@ public class MovieServices {
     private final RestClient restClient;
     private final MovieRepository movieRepository;
     private final String apiKey;
+    private final FavoritesRepository favoritesRepository;
 
     MovieServices(RestClient.Builder builder, MovieRepository movieRepository,
-                  @Value("${omdb-api-key}") String apiKeyProperties) {
+                  @Value("${omdb-api-key}") String apiKeyProperties, FavoritesRepository favoritesRepository) {
         this.restClient = builder.baseUrl("http://www.omdbapi.com/").build();
         this.movieRepository = movieRepository;
         this.apiKey = apiKeyProperties;
+        this.favoritesRepository = favoritesRepository;
     }
 
     public boolean checkIfAlreadySearched(String movieTitle) {
         return movieRepository.existsByFilmTitle(movieTitle);
     }
 
-    public MovieInfo findByTitle(String movieTitle) {
+    public MovieInfo findByTitle(String movieTitle, Long userId) {
+
         movieTitle = stringToCapital(movieTitle);
+        FavoriteSaved favoriteMovie = new FavoriteSaved();
+
         if (checkIfAlreadySearched(movieTitle)) {
-            return movieRepository.findFilmDetailsByFilmTitle(movieTitle);
-        } else {
-            String finalMovieTitle = movieTitle;
-            MovieInfo newMovie = restClient.get().uri(uriBuilder -> uriBuilder
-                    .queryParam("t", finalMovieTitle)
-                    .queryParam("apikey", apiKey)
-                    .build()).retrieve().body(MovieInfo.class);
+            MovieInfo movieReturned = movieRepository.findFilmDetailsByFilmTitle(movieTitle);
+            if (!movieRepository.checkIfUserAlreadySearched(userId, movieTitle)) {
 
-            assert newMovie != null;
-            movieRepository.save(newMovie);
-            return newMovie;
-
+                favoriteMovie.setMovieId(movieReturned.getId());
+                favoriteMovie.setUserId(userId);
+                favoritesRepository.save(favoriteMovie);
+            }
+            return movieReturned;
         }
+
+        String finalMovieTitle = movieTitle;
+        MovieInfo newMovie = restClient.get().uri(uriBuilder -> uriBuilder
+                .queryParam("t", finalMovieTitle)
+                .queryParam("apikey", apiKey)
+                .build()).retrieve().body(MovieInfo.class);
+
+        assert newMovie != null;
+        movieRepository.save(newMovie);
+
+        favoriteMovie.setMovieId(movieRepository.findMovieByTitle(newMovie.getFilmTitle()));
+        favoriteMovie.setUserId(userId);
+        favoritesRepository.save(favoriteMovie);
+
+        return newMovie;
     }
 
     public String stringToCapital(String movieTitle) {
@@ -54,15 +71,18 @@ public class MovieServices {
             movieWord = movieWord.substring(0, 1).toUpperCase() + movieWord.substring(1).toLowerCase();
             finalMovieTitle.append(" ").append(movieWord);
         }
+
         return finalMovieTitle.toString().trim();
     }
 
-    public List<FavoritesInfo> showFavorites(@RequestParam String movieGenre) {
+    public List<FavoritesInfo> showFavorites(String movieGenre, Long userId) {
+
         if (movieGenre.isEmpty() || movieGenre.equals("all")) {
-            return movieRepository.findAllFavorites();
-        } else {
-            return movieRepository.findByGenre(stringToCapital(movieGenre));
+            return favoritesRepository.findAllFavorites(userId);
         }
+
+        return favoritesRepository.findByGenre(stringToCapital(movieGenre));
+
     }
 }
 

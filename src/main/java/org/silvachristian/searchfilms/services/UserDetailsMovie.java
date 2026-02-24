@@ -19,13 +19,11 @@ public class UserDetailsMovie implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
-        UserEntity user = loginRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+        UserEntity user = loginRepository.findByUsername(username);
 
-        // This returns the UserDetails object Spring Security needs
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
-                .password(user.getPassword()) // This must be the encoded password from DB
+                .password(user.getPassword())
                 .authorities("USER")
                 .build();
     }

@@ -9,14 +9,18 @@ import lombok.Setter;
 @Setter
 @Entity(name = "users")
 public class UserEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(unique = true)
     @NonNull
     private String username;
+
     @NonNull
     private String password;
+
     @NonNull
     @Column(unique = true)
     private String email;

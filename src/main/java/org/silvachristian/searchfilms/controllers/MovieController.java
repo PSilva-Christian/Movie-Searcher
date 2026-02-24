@@ -2,7 +2,7 @@ package org.silvachristian.searchfilms.controllers;
 
 import org.silvachristian.searchfilms.entity.FavoritesInfo;
 import org.silvachristian.searchfilms.entity.MovieInfo;
-import org.silvachristian.searchfilms.repository.MovieRepository;
+import org.silvachristian.searchfilms.repository.LoginRepository;
 import org.silvachristian.searchfilms.services.MovieServices;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,45 +17,61 @@ import java.util.List;
 @Controller
 public class MovieController {
 
-    MovieServices movieServices;
-    MovieRepository movieRepository;
+    private final MovieServices movieServices;
+    private final LoginRepository loginRepository;
 
-    MovieController(MovieServices filmServices, MovieRepository movieRepository) {
+    MovieController(MovieServices filmServices, LoginRepository loginRepository) {
         this.movieServices = filmServices;
-        this.movieRepository = movieRepository;
+        this.loginRepository = loginRepository;
     }
 
     @GetMapping("/home")
-    public String home(Model model) {
+    public String home(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+
         model.addAttribute("movie", new MovieInfo());
+        model.addAttribute("username", userDetails.getUsername());
+
         return "/movies/home";
     }
 
     @PostMapping("/home")
     public String postHome(@AuthenticationPrincipal UserDetails userDetails,
                            @RequestParam String movieTitle, Model model) {
-        MovieInfo movie = movieServices.findByTitle(movieTitle);
+
+        MovieInfo movie = movieServices.findByTitle(
+                movieTitle, loginRepository.findUserByUsername(userDetails.getUsername())
+        );
+
         model.addAttribute("movie", movie);
+        model.addAttribute("username", userDetails.getUsername());
 
         return "/movies/home";
     }
 
     @GetMapping("/favorites")
     public String favorites(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        List<FavoritesInfo> movieFavorites = movieServices.showFavorites("all");
-        model.addAttribute("movie",  movieFavorites);
+
         model.addAttribute("username", userDetails.getUsername());
+
         return "/movies/favorites";
     }
 
     @PostMapping("/favorites")
-    public String favorites(@RequestParam String movieGenre, Model model) {
-        List<FavoritesInfo> movieFavorites = movieServices.showFavorites(movieGenre);
+    public String favorites(@AuthenticationPrincipal UserDetails userDetails,
+                            @RequestParam String movieGenre, Model model) {
+
+        List<FavoritesInfo> movieFavorites = movieServices.showFavorites(
+                movieGenre, loginRepository.findUserByUsername(userDetails.getUsername())
+        );
+
         if (movieFavorites.isEmpty()) {
             model.addAttribute("movies", null);
         } else {
             model.addAttribute("movies", movieFavorites);
         }
+        model.addAttribute("username", userDetails.getUsername());
+
+
         return "/movies/favorites";
     }
 }

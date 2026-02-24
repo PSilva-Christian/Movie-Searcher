@@ -13,10 +13,15 @@
     <body>
         <main class="form-floating ">
             <div class="container border border-2 rounded rounded-3 mainBox shadow-lg">
-                <div class="h3 colorFontOpacity" th:text="${username}"></div>
-                <form th:action="@{/favorites}" method="post">
-                    <div th:replace="~{fragments :: formSearch('home', 'Enter a movie genre', 'movieGenre')}"></div>
-                </form>
+                <div class="row">
+                    <form th:action="@{/favorites}" method="post" class="row align-items-center justify-content-center">
+
+                        <div th:replace="~{fragments :: show_username(${username})}"></div>
+
+                        <div th:replace="~{fragments :: formSearch('home', 'Enter a movie genre', 'movieGenre')}"></div>
+
+                    </form>
+                </div>
                 <div class="row g-4">
                     <div th:if="${movies == null}" class="colorFontOpacity text-center h3 bold underline">
                         <p>Parameter not Founded</p>

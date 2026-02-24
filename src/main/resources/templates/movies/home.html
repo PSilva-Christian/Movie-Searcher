@@ -14,7 +14,10 @@
         <main class="form-floating">
             <div class="container border border-2 rounded rounded-3 mainBox shadow-lg">
                 <div class="row">
-                    <form th:action="@{/home}" method="post">
+                    <form th:action="@{/home}" method="post" class="row align-items-center justify-content-center">
+
+                        <div th:replace="~{fragments :: show_username(${username})}"></div>
+
                         <div th:replace="~{fragments :: formSearch('favorites', 'Enter a movie title', 'movieTitle')}"></div>
                     </form>
                     <div class="row">
