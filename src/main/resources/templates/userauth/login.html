@@ -23,6 +23,8 @@
                         <div class="mt-2 pb-4 ms-2 h4 fontDetails">
                             Nice to see you again!
                         </div>
+
+                        <p th:if="${not param.isEmpty()}" class="errorMessage">Invalid Credentials, Try again</p>
                         <label class="form-label loginInputs ms-4 fw-bolder" for="username">Username</label>
                         <input id="username" th:field="*{username}" type="text" class="form-control loginInputs" placeholder="Enter Username" />
 

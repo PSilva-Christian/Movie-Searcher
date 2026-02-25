@@ -1,14 +1,14 @@
 package org.silvachristian.searchfilms.repository;
 
-import org.silvachristian.searchfilms.entity.MovieInfo;
+import org.silvachristian.searchfilms.entity.MovieEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MovieRepository extends JpaRepository<MovieInfo, Long> {
+public interface MovieRepository extends JpaRepository<MovieEntity, Long> {
 
-    MovieInfo findFilmDetailsByFilmTitle(String movieTitle);
+    MovieEntity findFilmDetailsByFilmTitle(String movieTitle);
 
     boolean existsByFilmTitle(String movieTitle);
 

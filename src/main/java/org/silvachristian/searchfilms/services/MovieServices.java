@@ -1,10 +1,10 @@
 package org.silvachristian.searchfilms.services;
 
-import org.silvachristian.searchfilms.entity.FavoriteSaved;
+import org.silvachristian.searchfilms.entity.FavoriteEntity;
 import org.silvachristian.searchfilms.entity.FavoritesInfo;
 import org.silvachristian.searchfilms.repository.FavoritesRepository;
 import org.springframework.beans.factory.annotation.Value;
-import org.silvachristian.searchfilms.entity.MovieInfo;
+import org.silvachristian.searchfilms.entity.MovieEntity;
 import org.silvachristian.searchfilms.repository.MovieRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -31,13 +31,13 @@ public class MovieServices {
         return movieRepository.existsByFilmTitle(movieTitle);
     }
 
-    public MovieInfo findByTitle(String movieTitle, Long userId) {
+    public MovieEntity findByTitle(String movieTitle, Long userId) {
 
         movieTitle = stringToCapital(movieTitle);
-        FavoriteSaved favoriteMovie = new FavoriteSaved();
+        FavoriteEntity favoriteMovie = new FavoriteEntity();
 
         if (checkIfAlreadySearched(movieTitle)) {
-            MovieInfo movieReturned = movieRepository.findFilmDetailsByFilmTitle(movieTitle);
+            MovieEntity movieReturned = movieRepository.findFilmDetailsByFilmTitle(movieTitle);
             if (!movieRepository.checkIfUserAlreadySearched(userId, movieTitle)) {
 
                 favoriteMovie.setMovieId(movieReturned.getId());
@@ -48,10 +48,10 @@ public class MovieServices {
         }
 
         String finalMovieTitle = movieTitle;
-        MovieInfo newMovie = restClient.get().uri(uriBuilder -> uriBuilder
+        MovieEntity newMovie = restClient.get().uri(uriBuilder -> uriBuilder
                 .queryParam("t", finalMovieTitle)
                 .queryParam("apikey", apiKey)
-                .build()).retrieve().body(MovieInfo.class);
+                .build()).retrieve().body(MovieEntity.class);
 
         assert newMovie != null;
         movieRepository.save(newMovie);

@@ -1,7 +1,7 @@
 package org.silvachristian.searchfilms.controllers;
 
 import org.silvachristian.searchfilms.entity.FavoritesInfo;
-import org.silvachristian.searchfilms.entity.MovieInfo;
+import org.silvachristian.searchfilms.entity.MovieEntity;
 import org.silvachristian.searchfilms.repository.LoginRepository;
 import org.silvachristian.searchfilms.services.MovieServices;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,7 +28,7 @@ public class MovieController {
     @GetMapping("/home")
     public String home(@AuthenticationPrincipal UserDetails userDetails, Model model) {
 
-        model.addAttribute("movie", new MovieInfo());
+        model.addAttribute("movie", new MovieEntity());
         model.addAttribute("username", userDetails.getUsername());
 
         return "/movies/home";
@@ -38,7 +38,7 @@ public class MovieController {
     public String postHome(@AuthenticationPrincipal UserDetails userDetails,
                            @RequestParam String movieTitle, Model model) {
 
-        MovieInfo movie = movieServices.findByTitle(
+        MovieEntity movie = movieServices.findByTitle(
                 movieTitle, loginRepository.findUserByUsername(userDetails.getUsername())
         );
 

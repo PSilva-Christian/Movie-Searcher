@@ -24,14 +24,18 @@
                         <div class="mt-1 pb-3 ms-2 h4 fontDetails">
                             Create account!
                         </div>
+
                         <label class="form-label loginInputs ms-4 fw-bolder" for="username">Username</label>
-                        <input id="username"  type="text" class="form-control loginInputs " th:field="*{username}" placeholder="Enter your Username" />
+                        <input id="username"  type="text" class="form-control loginInputs " th:field="*{username}" placeholder="Enter username" />
 
                         <label for="email" class="form-label loginInputs ms-4 mt-2 fw-bolder">E-mail</label>
-                        <input id="email" type="email" class="form-control loginInputs" th:field="*{email}" placeholder="Enter E-mail" />
+                        <input id="email" type="email" class="form-control loginInputs" th:field="*{email}" placeholder="Enter e-mail" />
+                        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="errorInvalid"></p>
+
 
                         <label for="password" class="form-label loginInputs ms-4 mt-2 fw-bolder">Password</label>
-                        <input id="password" type="password" class="form-control loginInputs mb-0" th:field="*{password}" placeholder="Enter your Password" />
+                        <input minlength="8" maxlength="12" id="password" type="password" class="form-control loginInputs mb-0" th:field="*{password}" placeholder="Enter password" />
+                        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="errorInvalid"></p>
 
                         <div class=" container mt-5 formSignInOut">
                             <button type="submit" class="btn btn-outline-light searchBarCarac shadow-lg ms-0">Sign up</button>

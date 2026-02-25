@@ -20,11 +20,8 @@ public class LoginServices {
 
     public boolean registerUser(UserEntity user){
         if(!loginRepository.existsByUsername (user.getUsername())){
-            UserEntity userSaved = new UserEntity();
-            userSaved.setUsername(user.getUsername());
-            userSaved.setEmail(user.getEmail());
-            userSaved.setPassword(Objects.requireNonNull(passwordEncoder.encode(user.getPassword())));
-            loginRepository.save(userSaved);
+            user.setPassword(Objects.requireNonNull(passwordEncoder.encode(user.getPassword())));
+            loginRepository.saveAndFlush(user);
             return true;
         }
         return false;

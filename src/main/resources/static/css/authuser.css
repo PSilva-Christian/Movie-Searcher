@@ -38,6 +38,21 @@
     opacity: 0.7;
 }
 
+.errorMessage{
+    color: red;
+    font-weight: bolder;
+    text-align: center;
+    font-size: 16px;
+}
+
+.errorInvalid{
+    color: red;
+    font-weight: bolder;
+    font-size: 10px;
+    text-align: start;
+    margin-left: 4%;
+}
+
 .straightLine{
     display: grid;
     grid-template-columns: 2fr auto 2fr;
@@ -50,4 +65,6 @@
     content: "";
     border-top: 1px solid black;
 }
+
+
 

@@ -1,9 +1,12 @@
 package org.silvachristian.searchfilms.controllers;
 
+import jakarta.validation.Valid;
+import org.hibernate.validator.constraints.URL;
 import org.silvachristian.searchfilms.entity.UserEntity;
 import org.silvachristian.searchfilms.services.LoginServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,10 +33,19 @@ public class LoginController {
     }
 
     @PostMapping("/signup")
-    public String postSignup(@ModelAttribute("user") UserEntity userEntity) {
-        if(loginServices.registerUser(userEntity))
-            return "redirect:/movies/favorites";
-        return "/userauth/signup";
+    public String postSignup(@Valid @ModelAttribute("user") UserEntity userEntity, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return "/userauth/signup";
+        }
+        boolean teste = loginServices.registerUser(userEntity);
+        System.out.println("Return of registeruser : "+teste);
+
+        if(teste) {
+            return "/userauth/login";
+        }
+        else {
+            return "/userauth/login";
+        }
     }
 
 }

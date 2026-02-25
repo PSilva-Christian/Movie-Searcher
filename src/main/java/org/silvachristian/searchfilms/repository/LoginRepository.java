@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LoginRepository extends JpaRepository<UserEntity, Long> {
-    boolean existsByUsername(@NonNull String username);
+
+    @Query("SELECT CASE WHEN COUNT(username) > 0 THEN true ELSE false END FROM users WHERE username = :username")
+    boolean existsByUsername(String username);
 
     @Query("SELECT u.id FROM users u WHERE u.username = :username")
     Long findUserByUsername(String username);
