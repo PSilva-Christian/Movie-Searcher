@@ -31,7 +31,7 @@ public class MovieController {
         model.addAttribute("movie", new MovieEntity());
         model.addAttribute("username", userDetails.getUsername());
 
-        return "/movies/home";
+        return "movies/home";
     }
 
     @PostMapping("/home")
@@ -45,7 +45,7 @@ public class MovieController {
         model.addAttribute("movie", movie);
         model.addAttribute("username", userDetails.getUsername());
 
-        return "/movies/home";
+        return "movies/home";
     }
 
     @GetMapping("/favorites")
@@ -53,7 +53,7 @@ public class MovieController {
 
         model.addAttribute("username", userDetails.getUsername());
 
-        return "/movies/favorites";
+        return "movies/favorites";
     }
 
     @PostMapping("/favorites")
@@ -72,6 +72,6 @@ public class MovieController {
         model.addAttribute("username", userDetails.getUsername());
 
 
-        return "/movies/favorites";
+        return "movies/favorites";
     }
 }

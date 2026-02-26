@@ -23,28 +23,28 @@ public class LoginController {
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("user", new UserEntity());
-        return "/userauth/login";
+        return "userauth/login";
     }
 
     @GetMapping("/signup")
     public String signup(Model model) {
         model.addAttribute("user", new UserEntity());
-        return "/userauth/signup";
+        return "userauth/signup";
     }
 
     @PostMapping("/signup")
     public String postSignup(@Valid @ModelAttribute("user") UserEntity userEntity, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
-            return "/userauth/signup";
+            return "userauth/signup";
         }
         boolean teste = loginServices.registerUser(userEntity);
         System.out.println("Return of registeruser : "+teste);
 
         if(teste) {
-            return "/userauth/login";
+            return "userauth/login";
         }
         else {
-            return "/userauth/login";
+            return "userauth/login";
         }
     }
 
